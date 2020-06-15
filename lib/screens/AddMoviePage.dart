@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fluttercross/model/Movie.dart';
-import 'package:fluttercross/model/MovieTrackerApp.dart';
+import 'package:fluttercross/core/models/Movie.dart';
+import 'package:fluttercross/core/viewmodels/base_model.dart';
 import 'package:fluttercross/widgets/DebouncedTextField.dart';
 import 'package:fluttercross/widgets/MovieListItem.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +18,7 @@ class _AddMoviePageState extends State<AddMoviePage> {
 
   @override
   Widget build(BuildContext context) {
-    final MovieTrackerApp app = Provider.of<MovieTrackerApp>(context);
+    final BaseModel app = Provider.of<BaseModel>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -34,7 +34,7 @@ class _AddMoviePageState extends State<AddMoviePage> {
                   InputDecoration(hintText: 'Add a movie you have seen before'),
               controller: controller,
               onChanged: (v) async {
-                final results = await app.movieRepository.findMovies(v);
+                final results = await app.networkRepository.findMovies(v);
                 setState(() {
                   _progressBarActive = false;
                   _results = results.toDomain();
@@ -62,10 +62,10 @@ class _AddMoviePageState extends State<AddMoviePage> {
   }
 
   void _markAsWatched(Movie movie, [DateTime dateWatched]) async {
-    final MovieTrackerApp app = Provider.of<MovieTrackerApp>(context);
+    final BaseModel app = Provider.of<BaseModel>(context);
     final date = dateWatched ?? DateTime.now();
     movie.watchedOn = date.millisecondsSinceEpoch;
-    await app.storage.addToWatched(movie);
+    app.storage.addToWatched(movie);
     Navigator.pop(context);
   }
 }

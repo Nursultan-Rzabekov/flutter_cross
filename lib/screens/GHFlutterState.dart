@@ -1,16 +1,13 @@
-import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttercross/core/viewmodels/base_model.dart';
+import 'package:fluttercross/extension/Strings.dart';
 import 'package:fluttercross/extension/Util.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-
-import '../model/Member.dart';
-import '../data/network/NetworkApi.dart';
-import 'package:http/http.dart' as http;
+import 'package:fluttercross/screens/AppDrawer.dart';
+import 'package:provider/provider.dart';
+import '../core/models/Member.dart';
 
 
 class HomeWidget extends StatelessWidget{
@@ -32,9 +29,11 @@ class GHFlutterState extends State<GHFlutter> {
   var _members = List<Member>();
   final _biggerFont = const TextStyle(fontSize: 18.0);
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold (
+      appBar: AppBar(title: Text(Strings.home)),
       body: _progressBarActive == true
           ? new Center(child: const CircularProgressIndicator())
           : ListView.builder(
@@ -45,6 +44,7 @@ class GHFlutterState extends State<GHFlutter> {
             final index = position ~/ 2;
             return _buildRow(index);
           }),
+      drawer: AppDrawer(),
     );
   }
 
@@ -109,11 +109,11 @@ class GHFlutterState extends State<GHFlutter> {
   }
 
   void _loadData() async {
-    var result = await NetworkAPI().getRequest();
+    final BaseModel app = Provider.of<BaseModel>(context);
+    var result = await app.networkRepository.getRequest();
     setState(() {
       _progressBarActive = false;
-        Iterable list = json.decode(result);
-      _members = list.map((model) => Member.fromJson(model)).toList();
+      _members = result;
     });
     print(result);
   }

@@ -1,5 +1,5 @@
-import 'package:fluttercross/model/Movie.dart';
-import 'package:fluttercross/model/MovieSearchResponse.dart';
+import 'package:fluttercross/core/models/Movie.dart';
+import 'package:fluttercross/core/models/MovieSearchResponse.dart';
 
 extension DataToDomain on MovieSearchResponse {
   List<Movie> toDomain() {

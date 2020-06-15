@@ -29,7 +29,7 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:fluttercross/model/Movie.dart';
+import 'package:fluttercross/core/models/Movie.dart';
 
 import 'AvatarImageView.dart';
 

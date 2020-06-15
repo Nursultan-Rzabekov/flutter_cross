@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:fluttercross/core/data/network/NetworkApi.dart';
+import 'package:fluttercross/core/viewmodels/base_model.dart';
 import 'package:fluttercross/screens/AddMoviePage.dart';
+import 'package:fluttercross/screens/GHFlutterState.dart';
 import 'package:fluttercross/screens/Home_Bottom_Nav.dart';
-import 'package:fluttercross/model/Strings.dart';
+import 'package:fluttercross/extension/Strings.dart';
 import 'package:fluttercross/screens/ItemDetailPage.dart';
 import 'package:fluttercross/screens/MoviesListPage.dart';
 import 'package:provider/provider.dart';
-import 'data/local/Storage.dart';
-import 'data/local/DatabasePersistence.dart';
-import 'data/network/OMDBClient.dart';
-import 'model/Movie.dart';
-import 'model/MovieTrackerApp.dart';
+import 'core/data/local/DatabasePersistence.dart';
+import 'core/data/local/Storage.dart';
+import 'core/models/Movie.dart';
 
 
 void main() {
@@ -18,7 +19,7 @@ void main() {
 
 class GHFlutterApp extends StatelessWidget {
   static const apiKey = 'ff6dee5d';
-  static var provider = MovieTrackerApp(OMDBClient(apiKey), null);
+  static var provider = BaseModel(NetworkAPI(apiKey), null);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,7 @@ class GHFlutterApp extends StatelessWidget {
         ),
         builder: (context, snapshot) {
           final repository = snapshot.data;
-          provider = MovieTrackerApp(OMDBClient(apiKey), repository);
+          provider = BaseModel(NetworkAPI(apiKey), repository);
           return MultiProvider(
               providers: [ChangeNotifierProvider.value(value: provider)],
               child: MaterialApp(
@@ -117,6 +118,15 @@ class GHFlutterApp extends StatelessWidget {
             )
           ],
           child: AddMoviePage(),
+        );
+      case '/flutterState':
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider.value(
+              value: provider,
+            )
+          ],
+          child: HomeWidget(),
         );
       default:
         return Container();

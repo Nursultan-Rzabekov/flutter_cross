@@ -1,5 +1,6 @@
+import 'package:fluttercross/core/models/Movie.dart';
+
 import 'DatabasePersistence.dart';
-import '../../model/Movie.dart';
 
 class Storage {
   final DatabasePersistence _repository;
@@ -13,7 +14,7 @@ class Storage {
   Storage(this._repository);
 
   void addToWatched(Movie movie) async {
-    await _repository.createOrUpdateObject(movie.id, movie.toMap());
+    _repository.createOrUpdateObject(movie.id, movie.toMap());
   }
 
   Future<List<Movie>> watchedMovies(String query) async {
