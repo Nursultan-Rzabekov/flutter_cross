@@ -1,5 +1,5 @@
-import 'data/local/DatabasePersistence.dart';
-import 'model/Movie.dart';
+import 'DatabasePersistence.dart';
+import '../../model/Movie.dart';
 
 class Storage {
   final DatabasePersistence _repository;

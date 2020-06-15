@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttercross/data/network/OMDBClient.dart';
-import '../Storage.dart';
+import '../data/local/Storage.dart';
 
 class MovieTrackerApp with ChangeNotifier {
   MovieTrackerApp(this._movieRepository, this._storage);

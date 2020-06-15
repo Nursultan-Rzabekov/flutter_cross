@@ -5,7 +5,7 @@ import 'package:fluttercross/model/Strings.dart';
 import 'package:fluttercross/screens/ItemDetailPage.dart';
 import 'package:fluttercross/screens/MoviesListPage.dart';
 import 'package:provider/provider.dart';
-import 'Storage.dart';
+import 'data/local/Storage.dart';
 import 'data/local/DatabasePersistence.dart';
 import 'data/network/OMDBClient.dart';
 import 'model/Movie.dart';
