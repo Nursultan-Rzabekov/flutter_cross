@@ -43,18 +43,18 @@ class _AddMoviePageState extends State<AddMoviePage> {
             ),
           ),
           Expanded(
-            child: _progressBarActive == true ?
-            new Center(child: const CircularProgressIndicator())
-            : ListView.builder(
-              itemCount: _results.length,
-              itemBuilder: (context, index) {
-                final item = _results[index];
-                return GestureDetector(
-                  onTap: () => _markAsWatched(item),
-                  child: MovieListItem(item: item),
-                );
-              },
-            ),
+            child: _progressBarActive == true
+                ? new Center(child: const CircularProgressIndicator())
+                : ListView.builder(
+                    itemCount: _results.length,
+                    itemBuilder: (context, index) {
+                      final item = _results[index];
+                      return GestureDetector(
+                        onTap: () => _markAsWatched(item),
+                        child: MovieListItem(item: item),
+                      );
+                    },
+                  ),
           )
         ],
       ),
@@ -65,7 +65,7 @@ class _AddMoviePageState extends State<AddMoviePage> {
     final BaseModel app = Provider.of<BaseModel>(context);
     final date = dateWatched ?? DateTime.now();
     movie.watchedOn = date.millisecondsSinceEpoch;
-    app.storage.addToWatched(movie);
+    //app.storage.addToWatched(movie);
     Navigator.pop(context);
   }
 }

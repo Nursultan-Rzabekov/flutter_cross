@@ -8,10 +8,7 @@ import 'package:fluttercross/extension/Strings.dart';
 import 'package:fluttercross/screens/ItemDetailPage.dart';
 import 'package:fluttercross/screens/MoviesListPage.dart';
 import 'package:provider/provider.dart';
-import 'core/data/local/DatabasePersistence.dart';
-import 'core/data/local/Storage.dart';
 import 'core/models/Movie.dart';
-
 
 void main() {
   runApp(GHFlutterApp());
@@ -19,44 +16,39 @@ void main() {
 
 class GHFlutterApp extends StatelessWidget {
   static const apiKey = 'ff6dee5d';
-  static var provider = BaseModel(NetworkAPI(apiKey), null);
+  static var provider = BaseModel(NetworkAPI(apiKey));
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<Storage>(
-        future: Storage.createFrom(
-          future: DatabasePersistence.create(),
-        ),
-        builder: (context, snapshot) {
-          final repository = snapshot.data;
-          provider = BaseModel(NetworkAPI(apiKey), repository);
-          return MultiProvider(
-              providers: [ChangeNotifierProvider.value(value: provider)],
-              child: MaterialApp(
-                title: Strings.appTitle,
-                theme: ThemeData(primaryColor: Colors.green.shade800),
-                home: Home(),
-                onGenerateRoute: (settings) {
-                  return MaterialPageRoute(
-                    builder: (context) {
-                      return _makeRoute(
-                          context: context,
-                          routeName: settings.name,
-                          arguments: settings.arguments);
-                    },
-                    maintainState: true,
-                    fullscreenDialog: false,
-                  );
+    return FutureBuilder(builder: (context, snapshot) {
+      final repository = snapshot.data;
+      provider = BaseModel(NetworkAPI(apiKey));
+      return MultiProvider(
+          providers: [ChangeNotifierProvider.value(value: provider)],
+          child: MaterialApp(
+            title: Strings.appTitle,
+            theme: ThemeData(primaryColor: Colors.green.shade800),
+            home: Home(),
+            onGenerateRoute: (settings) {
+              return MaterialPageRoute(
+                builder: (context) {
+                  return _makeRoute(
+                      context: context,
+                      routeName: settings.name,
+                      arguments: settings.arguments);
                 },
-              )
-          );
-        });
+                maintainState: true,
+                fullscreenDialog: false,
+              );
+            },
+          ));
+    });
   }
 
   Widget _makeRoute(
       {@required BuildContext context,
-        @required String routeName,
-        Object arguments}) {
+      @required String routeName,
+      Object arguments}) {
     final Widget child = _buildRoute(
       context: context,
       routeName: routeName,
@@ -133,7 +125,3 @@ class GHFlutterApp extends StatelessWidget {
     }
   }
 }
-
-
-
-

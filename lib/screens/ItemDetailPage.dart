@@ -3,7 +3,6 @@ import 'package:fluttercross/core/models/Movie.dart';
 import 'package:fluttercross/core/viewmodels/base_model.dart';
 import 'package:fluttercross/widgets/MagicAppBar.dart';
 import 'package:fluttercross/widgets/PillShapedButton.dart';
-
 import 'package:provider/provider.dart';
 
 class ItemDetailPage extends StatelessWidget {
@@ -61,8 +60,8 @@ class ItemDetailPage extends StatelessWidget {
 
   void removeFromWatched(BuildContext context) async {
     final app = Provider.of<BaseModel>(context);
-    final repo = app.storage;
-    repo.removeFromWatched(item);
+    //final repo = app.storage;
+    //repo.removeFromWatched(item);
     app.refresh();
     Navigator.pop(context);
   }

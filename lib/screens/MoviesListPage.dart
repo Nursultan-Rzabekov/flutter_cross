@@ -26,7 +26,8 @@ class _MoviesListPageState extends State<MoviesListPage> {
             padding: const EdgeInsets.all(8.0),
             child: DebouncedTextField(
               debounceDuration: Duration(milliseconds: 500),
-              decoration: InputDecoration(hintText: 'Search your watch history'),
+              decoration:
+                  InputDecoration(hintText: 'Search your watch history'),
               controller: controller,
               onChanged: (value) async {
                 setState(() {
@@ -37,25 +38,25 @@ class _MoviesListPageState extends State<MoviesListPage> {
           ),
           Expanded(
             child: FutureBuilder<Object>(
-                future: app.storage?.watchedMovies(_query),
+                //future: app.storage?.watchedMovies(_query),
                 builder: (context, snapshot) {
-                  final List<Movie> items = snapshot.data ?? [];
-                  return ListView.builder(
-                    itemCount: items.length,
-                    itemBuilder: (context, index) {
-                      final item = items[index];
-                      return GestureDetector(
-                        onTap: () => Navigator.of(context).pushNamed(
-                          '/details',
-                          arguments: {'item': item},
-                        ),
-                        child: MovieListItem(
-                          item: item,
-                        ),
-                      );
-                    },
+              final List<Movie> items = snapshot.data ?? [];
+              return ListView.builder(
+                itemCount: items.length,
+                itemBuilder: (context, index) {
+                  final item = items[index];
+                  return GestureDetector(
+                    onTap: () => Navigator.of(context).pushNamed(
+                      '/details',
+                      arguments: {'item': item},
+                    ),
+                    child: MovieListItem(
+                      item: item,
+                    ),
                   );
-                }),
+                },
+              );
+            }),
           ),
         ],
       ),

@@ -9,13 +9,10 @@ import 'package:fluttercross/screens/AppDrawer.dart';
 import 'package:provider/provider.dart';
 import '../core/models/Member.dart';
 
-
-class HomeWidget extends StatelessWidget{
+class HomeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: GHFlutter()
-    );
+    return Scaffold(body: GHFlutter());
   }
 }
 
@@ -29,55 +26,52 @@ class GHFlutterState extends State<GHFlutter> {
   var _members = List<Member>();
   final _biggerFont = const TextStyle(fontSize: 18.0);
 
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold (
+    return Scaffold(
       appBar: AppBar(title: Text(Strings.home)),
       body: _progressBarActive == true
           ? new Center(child: const CircularProgressIndicator())
           : ListView.builder(
-          padding: const EdgeInsets.all(16.0),
-          itemCount: _members.length,
-          itemBuilder: (BuildContext context, int position) {
-            if(position.isOdd) return Divider();
-            final index = position ~/ 2;
-            return _buildRow(index);
-          }),
+              padding: const EdgeInsets.all(16.0),
+              itemCount: _members.length,
+              itemBuilder: (BuildContext context, int position) {
+                if (position.isOdd) return Divider();
+                final index = position ~/ 2;
+                return _buildRow(index);
+              }),
       drawer: AppDrawer(),
     );
   }
 
-  Widget _buildRow(int i){
+  Widget _buildRow(int i) {
     return Card(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
-            child: ListTile(
-            title: Text("${_members[i].login}", style: _biggerFont),
-            leading: CircleAvatar(
-              backgroundColor: Colors.green,
-              backgroundImage: NetworkImage(_members[i].avatarUrl),
-              ),
-            ),
-        )
-    );
+      padding: const EdgeInsets.all(16.0),
+      child: ListTile(
+        title: Text("${_members[i].login}", style: _biggerFont),
+        leading: CircleAvatar(
+          backgroundColor: Colors.green,
+          backgroundImage: NetworkImage(_members[i].avatarUrl),
+        ),
+      ),
+    ));
   }
 
   @override
+  // ignore: missing_return
   Future<void> initState() {
     // TODO: implement initState
     super.initState();
     _checkConnection();
-
   }
 
-  Future<Null> _checkConnection() async{
+  Future<Null> _checkConnection() async {
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         toast("Connected");
         _loadData();
-
       }
     } on SocketException catch (_) {
       toast("Not connected");
@@ -89,6 +83,7 @@ class GHFlutterState extends State<GHFlutter> {
     return showDialog<Null>(
       context: context,
       barrierDismissible: false, // user must tap button!
+      // ignore: deprecated_member_use
       child: new AlertDialog(
         title: new Text('No network connection.'),
         content: new SingleChildScrollView(
@@ -118,13 +113,3 @@ class GHFlutterState extends State<GHFlutter> {
     print(result);
   }
 }
-
-
-
-
-
-
-
-
-
-

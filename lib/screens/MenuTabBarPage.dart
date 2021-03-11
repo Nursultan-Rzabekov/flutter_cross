@@ -2,15 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttercross/screens/MoviesListPage.dart';
 
-class MenuTabBarPage extends StatefulWidget{
+class MenuTabBarPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _TabBarPageState();
 }
 
-
 class _TabBarPageState extends State<MenuTabBarPage> {
   final controller = TextEditingController();
-  String _query;
 
   @override
   Widget build(BuildContext context) {
